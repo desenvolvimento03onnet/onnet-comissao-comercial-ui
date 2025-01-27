@@ -1,0 +1,34 @@
+.Tabela{
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 50%;
+  right: 0%;
+  bottom: 0%;
+  background-color: transparent;
+}
+.Tabela table{
+  box-shadow: 5px 10px 8px #888888;
+  border: 3px solid white;
+  width: 90%;
+  height: 90%;
+  font-size: 25px;
+}
+.Tabela table tr{
+  background-color: white;
+}
+.Tabela table tr:nth-child(even){
+  background-color: #f2f2f2;
+}
+.Tabela table th{
+   background-color: aqua;
+   color: white;
+}
+.Tabela table th,
+.Tabela table tr,
+.Tabela table td{
+  border: 0.1px solid gray;
+  text-align: center;
+}
