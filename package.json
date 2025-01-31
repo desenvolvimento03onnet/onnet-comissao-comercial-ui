@@ -10,8 +10,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "apexcharts": "^4.4.0",
+    "axios": "^1.7.9",
+    "buffer": "^6.0.3",
+    "cors": "^2.8.5",
+    "papaparse": "^5.5.2",
     "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react-dom": "^18.3.1",
+    "react-modal": "^3.16.3",
+    "react-papaparse": "^4.4.0",
+    "react-router-dom": "^7.1.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.17.0",

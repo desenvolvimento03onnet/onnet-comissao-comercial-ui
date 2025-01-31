@@ -1,0 +1,147 @@
+.Tabela {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  overflow: hidden; /* Evita rolagem geral */
+  position: relative; /* Garante que os elementos internos fiquem bem posicionados */
+}
+
+.tableContainer {
+  flex-grow: 1; /* Permite que o tbody use o espaço disponível */
+  overflow-y: auto; /* Ativa a rolagem apenas no tbody */
+  max-height: 400px; /* Altura fixa para permitir rolagem */
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  border: 1px solid #2AA3F4;
+  min-width: 800px;
+}
+
+th, td {
+  padding: 8px;
+  text-align: center;
+  border: 1px solid #AAAAAA;
+}
+
+thead {
+  background: #1C6EA4;
+  color: #FFFFFF;
+  border-bottom: 2px solid #444444;
+  position: sticky;
+  top: 0; /* Fixa o cabeçalho no topo */
+  z-index: 2; /* Garante que o cabeçalho fique sobre as linhas da tabela */
+}
+
+tbody {
+  display: table-row-group;
+}
+
+tr:nth-child(even) {
+  background-color: #D8EDFF;
+}
+
+.pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
+  position: sticky;
+  bottom: 0; /* Para manter um fundo fixo */
+  padding: 10px 0;
+}
+
+.pagination button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.pagination button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+.Downloadbtn{
+  background-color: #097700 !important;
+  position: absolute;
+  right: 0%;
+  margin-right: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap; /* Evita que o conteúdo quebre */
+  }
+
+  th, td {
+    padding: 6px;
+    font-size: 14px; /* Reduz o tamanho da fonte */
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .table {
+    font-size: 12px;
+  }
+
+  th, td {
+    display: block;
+    width: 100%;
+  }
+
+  th {
+    text-align: center;
+    background-color: #eee;
+  }
+
+  tr {
+    margin-bottom: 10px;
+    display: block;
+    border-bottom: 2px solid #ddd;
+  }
+}
+
+/* .Tabela{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 90%;
+  background-color: lightgreen;
+}
+.table {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+thead, tbody{
+  display: block;  
+}
+tbody{
+  overflow: scroll;
+  height: 100%;
+}
+tbody::-webkit-scrollbar {
+  display: none;
+} 
+tr:nth-child(even) {
+  background-color: #f2f2f2;
+}
+thead{
+  display: flex;
+  font-size: 130%;
+}
+td{
+  font-size: 80%;
+} */
+
