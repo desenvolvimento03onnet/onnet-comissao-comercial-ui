@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { loadTabelaUsuarios } from "../../../../services/loadTabelaUsuários";
 import style from './Tabela.module.css';
 
-const Tabela = () => {
+const Tabela = ({ filter }) => {
     const [dados, setDados] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -13,14 +13,21 @@ const Tabela = () => {
         try {
           const carrega = await loadTabelaUsuarios(sessionStorage.getItem(0));
           
-          setDados(carrega);
+          const dadosFiltrados = filter.startDate && filter.endDate
+            ? carrega.filter(item =>
+                new Date(item.date) >= new Date(filter.startDate) &&
+                new Date(item.date) <= new Date(filter.endDate)
+              )
+            : carrega;
+
+          setDados(dadosFiltrados);
           //console.log(Object.values(carrega));
         } catch (error) {
           console.error("Erro ao carregar dados: ", error);
         }
       };
       fetchData();
-    }, []);
+    }, [filter]);
     
     const itemsPerPage = 10; // Define quantos itens serão exibidos por página
 
@@ -80,11 +87,11 @@ const Tabela = () => {
                   <td>{new Date(data.date).toLocaleDateString("pt-BR")}</td>
                   <td>{data.operation}</td>
                   <td>{data.plan}</td>
-                  <td>R$ {data.plan_value || 'Venda'}</td>
-                  <td>{data.old_plan || 'Venda'}</td>
-                  <td>R$ {data.old_plan_value || 'Venda'}</td>
-                  <td>{data.new_plan || 'Venda'}</td>
-                  <td>R$ {data.new_plan_value || 'Venda'}</td>
+                  <td>R$ {data.plan_value}</td>
+                  <td>{data.old_plan ? `R$ ${data.old_plan}` : "Venda"}</td>
+                  <td>{data.old_plan_value ? `R$ ${data.old_plan_value}` : "Venda"}</td>
+                  <td>{data.new_plan ? `R$ ${data.new_plan}` : "Venda"}</td>
+                  <td>{data.new_plan_value ? `R$ ${data.new_plan_value}` : "Venda"}</td>
                   <td>{data.operator}</td>
                   <td>{data.city_operator}</td>
                   <td>{data.recurring_payment ? "Sim" : "Não"}</td>

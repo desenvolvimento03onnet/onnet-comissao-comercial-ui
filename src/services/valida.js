@@ -1,8 +1,6 @@
 import axios from "axios";
 import { Buffer } from 'buffer';
 
-sessionStorage.clear();
-
 const valida = async (user, senha) => {
   const password = Buffer.from(senha, 'utf-8').toString('base64');
   try {

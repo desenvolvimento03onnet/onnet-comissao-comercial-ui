@@ -1,0 +1,24 @@
+.loadingContainer {
+  position: relative;
+  width: 100%;
+  height: 200px; /* Ajuste a altura conforme necessário */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  border: 1px solid #ccc; /* Apenas para visualização */
+}
+
+.loader {
+  border: 8px solid #f3f3f3; /* Cor do fundo da roda */
+  border-top: 8px solid #3498db; /* Cor da parte superior da roda */
+  border-radius: 50%;
+  width: 50px; /* Tamanho da roda */
+  height: 50px; /* Tamanho da roda */
+  animation: spin 1s linear infinite; /* Animação de rotação */
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}

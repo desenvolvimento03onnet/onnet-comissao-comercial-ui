@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { loadGraficoTotalRenovacoesUsuario } from "../../../../services/loadGraficoTotalRenovacoesUsuario";
 import styles from './Grafico.module.css';
 
-const ApexChart = () => {
+const ApexChart = ({ filter }) => {
     const [dados, setDados] = useState({ labels: [], series: [] });
   
     useEffect(() => {
@@ -12,8 +12,15 @@ const ApexChart = () => {
         try {
           const carrega = await loadGraficoTotalRenovacoesUsuario(sessionStorage.getItem(0));
           
+          const dadosFiltrados = filter.startDate && filter.endDate
+            ? carrega.filter(item =>
+                new Date(item.date) >= new Date(filter.startDate) &&
+                new Date(item.date) <= new Date(filter.endDate)
+              )
+            : carrega;
+
           // Agrupar e contar ocorrências de cada contrato
-          const agrupado = carrega.reduce((index, item) => {
+          const agrupado = dadosFiltrados.reduce((index, item) => {
             index[item.operation] = (index[item.operation] || 0) + 1;
             return index;
           }, {'Renovação':0,'Downgrade':0,'Upgrade':0});
@@ -27,7 +34,7 @@ const ApexChart = () => {
         }
       };
       fetchData();
-    }, []);
+    }, [filter]);
     
   return (
     <div>
@@ -57,6 +64,13 @@ const ApexChart = () => {
                 },
               },
             },
+            // dataLabels: {
+            //   enabled: true,
+            //   formatter: function (val, opts) {
+            //     // Retorna o valor real ao invés de porcentagem
+            //     return opts.w.config.series[opts.seriesIndex];
+            //   },
+            // },
             colors: ['#2E93fA', '#FF4560', '#66DA26'],
             labels: dados.labels,
             legend: {

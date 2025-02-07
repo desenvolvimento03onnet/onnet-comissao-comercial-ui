@@ -1,6 +1,8 @@
 .Tabela {
+  z-index: 0;
   display: flex;
   flex-direction: column;
+  background-color: #f9f9f9;
   width: 100%;
   height: 100%;
   overflow: hidden; /* Evita rolagem geral */
@@ -8,6 +10,7 @@
 }
 
 .tableContainer {
+  z-index: 0;
   flex-grow: 1; /* Permite que o tbody use o espaço disponível */
   overflow-y: auto; /* Ativa a rolagem apenas no tbody */
   max-height: 400px; /* Altura fixa para permitir rolagem */
@@ -16,7 +19,7 @@
 .table {
   width: 100%;
   border-collapse: collapse;
-  border: 1px solid #2AA3F4;
+  border: 1px solid #85c2ff;
   min-width: 800px;
 }
 
@@ -27,7 +30,7 @@ th, td {
 }
 
 thead {
-  background: #1C6EA4;
+  background: #85c2ff;
   color: #FFFFFF;
   border-bottom: 2px solid #444444;
   position: sticky;
@@ -40,7 +43,7 @@ tbody {
 }
 
 tr:nth-child(even) {
-  background-color: #D8EDFF;
+  background-color: #ededed;
 }
 
 .pagination {
@@ -57,7 +60,7 @@ tr:nth-child(even) {
 .pagination button {
   padding: 5px 10px;
   border: none;
-  background-color: #007bff;
+  background-color: #85c2ff;
   color: white;
   cursor: pointer;
   border-radius: 5px;
@@ -110,38 +113,22 @@ tr:nth-child(even) {
   }
 }
 
-/* .Tabela{
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 90%;
-  background-color: lightgreen;
+/* Estilo para navegadores WebKit */
+.table::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
 }
-.table {
-  width: 100%;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-}
-thead, tbody{
-  display: block;  
-}
-tbody{
-  overflow: scroll;
-  height: 100%;
-}
-tbody::-webkit-scrollbar {
-  display: none;
-} 
-tr:nth-child(even) {
-  background-color: #f2f2f2;
-}
-thead{
-  display: flex;
-  font-size: 130%;
-}
-td{
-  font-size: 80%;
-} */
 
+.table::-webkit-scrollbar-thumb {
+  background-color: #888;
+  border-radius: 10px;
+}
+
+.table::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+  border-radius: 10px;
+}
+
+.table::-webkit-scrollbar-thumb:hover {
+  background-color: #555;
+}

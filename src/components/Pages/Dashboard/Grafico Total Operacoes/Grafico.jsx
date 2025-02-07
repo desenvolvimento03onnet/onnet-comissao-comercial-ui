@@ -11,7 +11,6 @@ const ApexChart = () => {
       const fetchData = async () => {
         try {
           const carrega = await loadGraficoTotalOperacoesUsuario(sessionStorage.getItem(0));
-          
           // Agrupar e contar ocorrências de cada contrato
           const agrupado = carrega.reduce((index, item) => {
             index[item.operation] = (index[item.operation] || 0) + 1;

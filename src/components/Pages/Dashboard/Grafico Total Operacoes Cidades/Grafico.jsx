@@ -2,21 +2,33 @@ import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useState, useEffect } from "react";
 import { loadGraficoTotalOperacoesCidadesUsuario } from "../../../../services/loadGraficoTotalOperacoesCidadesUsuario";
+import { loadCidades } from "../../../../services/loadCidades";
 import styles from './Grafico.module.css';
 
-const ApexChart = () => {
+const ApexChart = ({ filter }) => {
     const [dados, setDados] = useState({ labels: [], series: [] });
-  
     useEffect(() => {
       const fetchData = async () => {
         try {
           const carrega = await loadGraficoTotalOperacoesCidadesUsuario(sessionStorage.getItem(0));
-          
+          const cidades = await loadCidades();
+          const cid = cidades.reduce((index, item) => {
+            index[item.name] = (index[item.name] || 0);
+            return index;
+          },{});
+
+          const dadosFiltrados = filter.startDate && filter.endDate
+            ? carrega.filter(item =>
+                new Date(item.date) >= new Date(filter.startDate) &&
+                new Date(item.date) <= new Date(filter.endDate)
+              )
+            : carrega;
+
           // Agrupar e contar ocorrências de cada contrato
-          const agrupado = carrega.reduce((index, item) => {
+          const agrupado = dadosFiltrados.reduce((index, item) => {
             index[item.city] = (index[item.city] || 0) + 1;
             return index;
-          }, {'Abadia dos Dourados':0, 'Araguari':0, 'Buritizeiro':0, 'Cruzeiro da Fortaleza':0, 'Guimarânia':0, 'Iraí de Minas':0, 'João Pinheiro':0, 'Lagoa Formosa':0, 'Patos de Minas':0, 'Patrocínio':0, 'Pirapora':0, 'Presidente Olegário':0, 'São Gonçalo do Abaeté':0, 'Três Marias':0, 'Varjão de Minas':0, 'Várzea da Palma':0});
+          }, cid);
           // Criar os arrays de labels e valores
           const labels = Object.keys(agrupado);
           const series = Object.values(agrupado);
@@ -27,14 +39,14 @@ const ApexChart = () => {
         }
       };
       fetchData();
-    }, []);
+    }, [filter]);
     
   return (
       <div id="chart" className={styles.Grafico}>
         <ReactApexChart
           options={{
             legend: {
-              show: true
+              show: false
             },
             plotOptions: {
               bar: {
@@ -69,7 +81,7 @@ const ApexChart = () => {
                 show: false
               },
               labels: {
-                show: false,
+                show: true,
                 style: {
                   fontSize:  '8px',
                   color:  '#263238'
@@ -127,7 +139,7 @@ const ApexChart = () => {
           }]}
           type="bar"
           width={1200}
-          height={300}
+          height={500}
         />
       </div>
   );

@@ -1,0 +1,31 @@
+.divFiltro {
+  position: absolute;
+  top: 32%;
+  left: 26%;
+  z-index: 1000;
+}
+
+.divFiltro > button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #85c2ff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.divDatas {
+  background: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+}
+
+.divDatas > button {
+  padding: 5px 10px;
+  border: none;
+  background-color: #85c2ff;
+  color: white;
+  cursor: pointer;
+  border-radius: 5px;
+}

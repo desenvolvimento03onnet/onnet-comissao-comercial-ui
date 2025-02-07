@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { loadGraficoTotalVendasUsuario } from "../../../../services/loadGraficoTotalVendasUsuario";
 import './Grafico.module.css';
 
-const ApexChart = () => {
+const ApexChart = ({ filter }) => {
     const [dados, setDados] = useState({ labels: [], series: [] });
   
     useEffect(() => {
@@ -12,8 +12,14 @@ const ApexChart = () => {
         try {
           const carrega = await loadGraficoTotalVendasUsuario(sessionStorage.getItem(0));
           
+          const dadosFiltrados = filter.startDate && filter.endDate
+            ? carrega.filter(item =>
+                new Date(item.date) >= new Date(filter.startDate) &&
+                new Date(item.date) <= new Date(filter.endDate)
+              )
+            : carrega;
           // Agrupar e contar ocorrências de cada contrato
-          const agrupado = carrega.reduce((index, item) => {
+          const agrupado = dadosFiltrados.reduce((index, item) => {
             index[item.operation] = (index[item.operation] || 0) + 1;
             return index;
           }, {'Venda':0});
@@ -27,7 +33,7 @@ const ApexChart = () => {
         }
       };
       fetchData();
-    }, []);
+    }, [filter]);
     
   return (
     <div>
@@ -57,6 +63,13 @@ const ApexChart = () => {
                 },
               },
             },
+            // dataLabels: {
+            //   enabled: true,
+            //   formatter: function (val, opts) {
+            //     // Retorna o valor real ao invés de porcentagem
+            //     return opts.w.config.series[opts.seriesIndex];
+            //   },
+            // },
             colors: ['#FF9800'],
             labels: dados.labels,
             legend: {
@@ -90,6 +103,11 @@ const ApexChart = () => {
               },
             },
             tooltip: {
+              // y: {
+              //   formatter: function (val) {
+              //     return val; // Exibe o valor real no tooltip
+              //   },
+              // },
               shared: true,
               hideEmptySeries: true,
             },
