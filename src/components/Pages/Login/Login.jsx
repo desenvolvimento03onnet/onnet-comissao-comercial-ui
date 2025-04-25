@@ -2,7 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import valida from "../../../services/valida";
 import insereLogUsuario from "../../../services/insereLogUsuário";
-import animation from '../../../assets/animation.gif'
+import Lottie from "lottie-react";
+import animation from "../../../assets/animation.json";
 import styles from './Login.module.css';
 
 const Login = () => {
@@ -26,7 +27,8 @@ const Login = () => {
       if (isValid.length != 0) {
         sessionStorage.setItem(0,user);
         await insereLogUsuario(dataAtual, 'Acesso Sistema', isValid[0].id, 'Usuário: '+sessionStorage.getItem(0)+' acessou o sistema em: '+dataAtual+' com o IP: '+ip);
-        navigate("/Dashboard"); // Redireciona para a Dashboard
+        sessionStorage.setItem(3,isValid[0].level);
+        navigate("/Dashboard");
       } else {
         alert("Usuário ou senha inválidos!");
       }
@@ -35,37 +37,43 @@ const Login = () => {
       alert("Erro ao validar o login. Tente novamente.");
     }
   };
-
+  
   return (
     <div className={styles.Geral}>
-      <div className={styles.Imagem}>
-        <img src={animation} alt="" />
-      </div>
       <div className={styles.container}>
-        <h2 className={styles.title}>OnNet Comissões</h2>
-        <form onSubmit={handleLogin} className={styles.form}>
-          <div className={styles.inputGroup}>
-            <label>Usuário:</label>
-            <input
-              type="text"
-              value={user}
-              onChange={(e) => setUser(e.target.value)}
-              required
-              className={styles.input}
-            />
+        <div className={styles.esquerda}>
+          <div className={styles.Imagem}>
+            {/* <h2 className={styles.title1}>OnNet Comissões</h2> */}
+            {/* <img src={animation} alt="" /> */}
+              <Lottie animationData={animation} loop={true} />
           </div>
-          <div className={styles.inputGroup}>
-            <label>Senha:</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-              className={styles.input}
-            />
-          </div>
-          <button type="submit" className={styles.button}>Entrar</button>
-        </form>
+        </div>
+        <div className={styles.direitaA}>
+          <h2 className={styles.title} data-text="OnNet Comissões">OnNet Comissões</h2>
+          <form onSubmit={handleLogin} className={styles.form}>
+            <div className={styles.inputGroup}>
+              <input
+                type="text"
+                value={user}
+                onChange={(e) => setUser(e.target.value)}
+                required
+                className={styles.input}
+                placeholder='Usuário'
+              />
+            </div>
+            <div className={styles.inputGroup}>
+              <input
+                type="password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                required
+                className={styles.input}
+                placeholder='Senha'
+              />
+            </div>
+            <button type="submit" className={styles.button}>Entrar</button>
+          </form>
+        </div>
       </div>
     </div>
   );

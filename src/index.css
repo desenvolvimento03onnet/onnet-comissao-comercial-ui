@@ -5,4 +5,19 @@ body {
   align-items: center;
   width: 100vw;
   height: 100vh;
+  background-color: #ecf0f1;
+  /* background-size: 400% 400%;
+  background-image: linear-gradient(-45deg, #135855, #1d887e, #379273, #63c6a9, #9cdbc8);
+  animation: mygradient 6s ease infinite; */
 }
+/* @keyframes mygradient {
+  0% {
+      background-position: 0% 50%;
+  }
+  50% {
+      background-position: 100% 50%;
+  }
+  100% {
+      background-position: 0% 50%;
+  }
+} */

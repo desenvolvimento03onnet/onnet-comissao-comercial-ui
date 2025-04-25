@@ -1,0 +1,67 @@
+.content{
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  height: 80px;
+  width: 100%;
+  margin-bottom: 30px;
+}
+.card {
+  position: relative;
+ display: flex; 
+ align-items: center;
+ justify-content: center;
+ width: 16.5%;
+ height: 100%;
+ background-color: #85c2ff;
+ overflow: hidden;
+ flex-direction: column;
+ z-index: -2;
+}
+
+/* .card::before{
+  position: absolute;
+  content: '';
+  display: flex;
+  width: 95%;
+  height: 80%;
+  background-color: transparent;
+  border: 2px solid white;
+  border-radius: 15px;
+} */
+
+.card .descricao{
+  height: 40%;
+}
+
+.card .valor{
+  height: 60%;
+}
+
+.card .descricao, .card .valor{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 140%;
+  width: 100%;
+  font-weight: bold;
+  color: white;
+  word-break: break-all;
+  z-index: 2;
+}
+
+.totalPago{
+  background-color: #13A600;
+}
+
+.totalNaoPago{
+  background-color: orange;
+}
+
+.ComissaoAprovada{
+  background-color: blue;
+}
+
+.ComissaoAprovar{
+  background-color: red;
+}

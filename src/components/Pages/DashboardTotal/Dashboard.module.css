@@ -1,0 +1,356 @@
+    :root{
+      --clr: #ecf0f1;
+    }
+    .card{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100vw;
+    height: 100vh;
+    flex-direction: column;
+  }
+  
+  .principal{
+    top: 0%;
+    width: 100%;
+    height: 96%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .esquerda{
+    left: 0%;
+    width: 16.5%;
+    height: 100%;
+    background-color: #85c2ff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .esquerda .navCima {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 30%;
+  }
+
+  .esquerda .navCima::before{
+    content: '';
+    position: absolute;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    top: 0.2%;
+    right: 0%;
+    border-top-right-radius: 20px;
+    box-shadow: 8px -8px 0 8px white;
+  }
+
+  .esquerda .navContent {
+    width: 100%;
+    height: 40%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+  }
+
+  .esquerda .links {
+    position: relative;
+    background-color: var(--clr);
+    color: #85c2ff;
+    width: 95%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-radius: 30px 0px 0px 30px;
+  }
+
+  .esquerda .links::before{
+    position: absolute;
+    content: '';
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    bottom: -27%;
+    right: 0.6%;
+    border-top-right-radius: 20px;
+    box-shadow: 8px -8px 0 8px var(--clr);
+  }
+
+  .esquerda .links::after{
+    position: absolute;
+    content: '';
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    top: -27%;
+    right: 0.6%;
+    border-bottom-right-radius: 20px;
+    box-shadow: 8px 8px 0 8px var(--clr);
+  }
+
+  .esquerda .links .icone {
+    width: 40px;
+    height: 50px;
+  }
+
+  .esquerda .navBaixo {
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 30%;
+  }
+
+  .esquerda .navBaixo::before{
+    content: '';
+    position: absolute;
+    background-color: transparent;
+    width: 20px;
+    height: 20px;
+    bottom: 0.2%;
+    right: 0%;
+    border-bottom-right-radius: 20px;
+    box-shadow: 8px 8px 0 8px var(--clr);
+  }
+
+  .direita{
+    right: 0;
+    width: 83.5%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    overflow-x: auto;
+  }
+
+  .direita .top {
+    position: sticky;
+    display: flex;
+    height: 10%;
+    width: 100%;
+    z-index: 10;
+  }
+
+  .direita .baixo{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 90%;
+    background-color: transparent;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: column;
+  }
+
+  .direita .baixo .cima,.direita .baixo .meio,.direita .baixo .baixo{
+    display: flex;
+    width: 100%;
+    height: 30%;
+    background-color: transparent;
+    align-items: center;
+    justify-content: space-around;
+    flex-direction: row;
+  }
+  
+
+  .direita .baixo .cima .esquerda,.direita .baixo .cima .meio,.direita .baixo .cima .direita,.direita .baixo .meio .esquerda,.direita .baixo .meio .meio,.direita .baixo .meio .direita,.direita .baixo .baixo .esquerda,.direita .baixo .baixo .meio,.direita .baixo .baixo .direita{
+    position: relative;
+    display: flex;
+    width: 30%;
+    height: 100%;
+    background-color: transparent;
+    border: 2px solid #85c2ff;
+    border-radius: 30px;
+    align-items: center;
+    justify-content: flex-start;
+    box-shadow: 2.5px 2.5px rgba(0, 0, 0);
+    overflow: auto;
+    flex-direction: column;
+  }
+  .direita .baixo .cima .esquerda .dados,.direita .baixo .cima .meio .dados,.direita .baixo .cima .direita .dados,.direita .baixo .meio .esquerda .dados,.direita .baixo .meio .meio .dados,.direita .baixo .meio .direita .dados,.direita .baixo .baixo .esquerda .dados,.direita .baixo .baixo .meio .dados,.direita .baixo .baixo .direita .dados{
+    position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
+    background-color: transparent;
+    align-items: center;
+    justify-content: flex-start;
+    overflow: auto;
+    flex-direction: column;
+  }
+
+  .direita .baixo .cima .esquerda .titulo,.direita .baixo .cima .meio .titulo,.direita .baixo .cima .direita .titulo,.direita .baixo .meio .esquerda .titulo,.direita .baixo .meio .meio .titulo,.direita .baixo .meio .direita .titulo,.direita .baixo .baixo .esquerda .titulo,.direita .baixo .baixo .meio .titulo,.direita .baixo .baixo .direita .titulo{
+    position: sticky;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    top: 0%;
+    width: 100%;
+    height: 30px;
+    background-color: #85c2ff;
+    color: white;
+  }
+
+  .direita .baixo::-webkit-scrollbar,.direita .baixo .cima .esquerda .dados::-webkit-scrollbar,.direita .baixo .cima .meio .dados::-webkit-scrollbar,.direita .baixo .cima .direita .dados::-webkit-scrollbar,.direita .baixo .meio .esquerda .dados::-webkit-scrollbar,.direita .baixo .meio .meio .dados::-webkit-scrollbar,.direita .baixo .meio .direita .dados::-webkit-scrollbar,.direita .baixo .baixo .esquerda .dados::-webkit-scrollbar,.direita .baixo .baixo .meio .dados::-webkit-scrollbar,.direita .baixo .baixo .direita .dados::-webkit-scrollbar {
+    display: none;
+  }
+
+  .botaoAdd{
+    position: absolute;
+    bottom: 3%;
+    display: flex;
+    width: 51px;
+    height: 20%;
+    right: 3%;
+  }
+  .botao{
+    position: sticky; /* ou fixed, se quiser que ele fique fixo na tela */
+    bottom: 1%;
+    right: 1%;
+    background-color: #00B80C;
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    flex-shrink: 0;
+  }
+
+  .botao:hover{
+    background-color: green;
+  }
+
+  .container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    padding-top: 6.3%;
+    z-index: 0;
+  }
+  
+  .container .cima, .container .aba2 .cima, .container .cima1 {
+    position: relative;
+    background-color: #ecf0f1;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    width: 100%;
+    height: 50%;
+    z-index: 0;
+    padding-top: 10%;
+  }
+
+  .container .cima1 {
+    padding-top: 30% !important;
+  }
+
+  .container .aba2 {
+    padding-bottom: 30% !important;
+  }
+
+  .valores{
+    left: 0%;
+    position: relative;
+    display: flex;
+    align-items: left;
+    justify-content: space-around;
+    flex-direction: column;
+    width: 15%;
+    height: 100%;
+  }
+
+  .container .aba2 {
+    background-color: #ecf0f1;
+    top: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+    padding-bottom: 16%;
+  }
+  .container .baixo, .container .aba2 .baixo{
+    background-color: #ecf0f1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 50%;
+    z-index: 0;
+  }
+
+  .title {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+
+  .button {
+    padding: 10px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .button:hover {
+    background-color: #0056b3;
+  }
+  .bottom {
+    width: 100%;
+    height: 80%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .footer{
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 4%;
+  }
+  .empresa {
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: left;
+  }
+  .empresa img{
+    filter: saturate(1);
+    margin-left: 4%;
+    margin-top: 0.1%;
+    width: 7%;
+    height: 80%;
+  }
+  .direitos{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+  }
+  .direitos span{
+    right: 0%;
+    margin-top: 0.1%;
+    width: 50%;
+    height: 80%;
+    opacity: 0.5;
+  }

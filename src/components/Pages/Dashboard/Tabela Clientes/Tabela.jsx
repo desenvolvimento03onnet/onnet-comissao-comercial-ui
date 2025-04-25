@@ -20,14 +20,31 @@ const Tabela = ({ filter }) => {
               )
             : carrega;
 
-          setDados(dadosFiltrados);
-          //console.log(Object.values(carrega));
+          const ordena = [...dadosFiltrados].sort((a, b) => {
+            const cidadeComparison = a.city.localeCompare(b.city);
+            if (cidadeComparison !== 0) return cidadeComparison;
+
+            // 2️⃣ Se a cidade for igual, ordena por data (mais antiga primeiro)
+            const dataComparison = new Date(a.date) - new Date(b.date);
+            if (dataComparison !== 0) return dataComparison;
+
+            // 3️⃣ Se a data for igual, ordena por operação (ordem alfabética)
+            const operacaoComparison = a.operation.localeCompare(b.operation);
+            if (operacaoComparison !== 0) return operacaoComparison;
+
+            // 4️⃣ Se a operação for igual, ordena por nome (ordem alfabética)
+            return a.name.localeCompare(b.name);
+          });
+
+          setDados(ordena);
         } catch (error) {
           console.error("Erro ao carregar dados: ", error);
         }
       };
       fetchData();
     }, [filter]);
+
+    const dataAtual = new Date().toLocaleString("pt-BR", {timeZone: "America/Sao_Paulo"});
     
     const itemsPerPage = 10; // Define quantos itens serão exibidos por página
 
@@ -75,11 +92,12 @@ const Tabela = ({ filter }) => {
                 <th>Fatura</th>
                 <th>Pago?</th>
                 <th>Data Vencimento</th>
+                <th>Comissão</th>
               </tr>
             </thead>
             <tbody className={style.Tbody}>
               {currentItems.map((data, index) => (
-                <tr key={index}>
+                <tr key={index} className={style.Linhas}>
                   <td>{data.codclient}</td>
                   <td>{data.name}</td>
                   <td>{data.city}</td>
@@ -88,9 +106,9 @@ const Tabela = ({ filter }) => {
                   <td>{data.operation}</td>
                   <td>{data.plan}</td>
                   <td>R$ {data.plan_value}</td>
-                  <td>{data.old_plan ? `R$ ${data.old_plan}` : "Venda"}</td>
+                  <td>{data.old_plan ? `${data.old_plan}` : "Venda"}</td>
                   <td>{data.old_plan_value ? `R$ ${data.old_plan_value}` : "Venda"}</td>
-                  <td>{data.new_plan ? `R$ ${data.new_plan}` : "Venda"}</td>
+                  <td>{data.new_plan ? `${data.new_plan}` : "Venda"}</td>
                   <td>{data.new_plan_value ? `R$ ${data.new_plan_value}` : "Venda"}</td>
                   <td>{data.operator}</td>
                   <td>{data.city_operator}</td>
@@ -100,6 +118,7 @@ const Tabela = ({ filter }) => {
                   <td>{data.invoice}</td>
                   <td>{data.paid ? "Sim" : "Não"}</td>
                   <td>{data.due_date}</td>
+                  <td>{data.paid ? (parseFloat(eval(data.comission).toFixed(2)) || 0) : "Cliente Não Pagou"}</td>
                 </tr>
               ))}
             </tbody>
@@ -120,7 +139,7 @@ const Tabela = ({ filter }) => {
           <CSVDownloader
             className={style.Downloadbtn}
             type={Type.Button}
-            filename={'Comissão_'+sessionStorage.getItem(0)}
+            filename={'Comissão_'+sessionStorage.getItem(0)+'_'+dataAtual}
             bom={true}
             config={{
               delimiter: ';',
@@ -135,11 +154,11 @@ const Tabela = ({ filter }) => {
                   'Data': new Date(data.date).toLocaleDateString("pt-BR"),
                   'Operação': data.operation,
                   'Plano': data.plan,
-                  'Valor Plano': 'R$' + (data.plan_value || 'Venda'),
+                  'Valor Plano': 'R$ ' + data.plan_value,
                   'Plano Antigo': data.old_plan || 'Venda',
-                  'Valor Plano Antigo': 'R$' + (data.old_plan_value || 'Venda'),
+                  'Valor Plano Antigo': (data.old_plan_value ? 'R$ ' + data.old_plan_value : 'Venda'),
                   'Plano Novo': data.new_plan || 'Venda',
-                  'Valor Plano Novo': 'R$' + (data.new_plan_value || 'Venda'),
+                  'Valor Plano Novo': (data.new_plan_value ? 'R$ ' + data.new_plan_value : 'Venda'),
                   'Operador': data.operator,
                   'Cidade Operador': data.city_operator,
                   'Pagamento Recorrente?': data.recurring_payment ? "Sim" : "Não",
@@ -152,7 +171,7 @@ const Tabela = ({ filter }) => {
               ))
             }
           >
-            Download CSV
+            Baixar CSV
           </CSVDownloader>
         </div>
       </div>
