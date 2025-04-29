@@ -1,7 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useState, useEffect } from "react";
-import { loadTabelaSupervisores } from "../../../../services/loadTabelaSupervisores";
+import { serviceSupervisores } from "../../../../services/serviceSupervisores";
 import style from './Grafico.module.css';
 import { GiConsoleController } from "react-icons/gi";
 
@@ -12,15 +12,15 @@ const ApexChart = ({ filter }) => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const carrega = await loadTabelaSupervisores(sessionStorage.getItem(0));
+          const carrega = await serviceSupervisores(sessionStorage.getItem(0));
           
-          const dadosFiltrados = filter.startDate && filter.endDate
-            ? carrega.filter(item =>
-                new Date(item.date) >= new Date(filter.startDate) &&
-                new Date(item.date) <= new Date(filter.endDate)
-              )
-            : carrega;
-            
+          const dadosFiltrados = carrega.filter(item => {
+            const dataValida = new Date(item.date) >= new Date(filter.startDate) && new Date(item.date) <= new Date(filter.endDate);
+            const operadorValido = filter.operator.length === 0 || filter.operator.includes(item.operator);
+            const operacaoValida = filter.operation.length === 0 || filter.operation.includes(item.operation);
+            return dataValida && operadorValido && operacaoValida;
+              });
+              
           const processaMaisPlanosVendidos = () => {
             const groupedData = {};
     

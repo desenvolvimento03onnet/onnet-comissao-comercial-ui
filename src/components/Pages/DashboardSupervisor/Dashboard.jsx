@@ -27,7 +27,8 @@ const Dashboard = () => {
         <div className={styles.esquerda}>
           <div className={styles.navCima}></div>
           <div className={styles.navContent}>
-            <p className={styles.links}><FaHome className={styles.icone} /> Início</p>
+            <Filtro onFilterChange={setFilter} />
+            {/* <p className={styles.links}><FaHome className={styles.icone} /> Início</p> */}
           </div>
           <div className={styles.navBaixo}></div>
         </div>
@@ -47,7 +48,6 @@ const Dashboard = () => {
                 <Tab className={styles.tab}>
                   <a href="#"><FaTable /></a>
                 </Tab>
-                <Filtro onFilterChange={setFilter} />
               </TabList>
 
               <TabPanel>

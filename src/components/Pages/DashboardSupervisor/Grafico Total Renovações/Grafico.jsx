@@ -12,12 +12,12 @@ const ApexChart = ({ filter }) => {
         try {
           const carrega = await loadGraficoTotalRenovacoesUsuario(sessionStorage.getItem(0));
           
-          const dadosFiltrados = filter.startDate && filter.endDate
-            ? carrega.filter(item =>
-                new Date(item.date) >= new Date(filter.startDate) &&
-                new Date(item.date) <= new Date(filter.endDate)
-              )
-            : carrega;
+          const dadosFiltrados = carrega.filter(item => {
+            const dataValida = new Date(item.date) >= new Date(filter.startDate) && new Date(item.date) <= new Date(filter.endDate);
+            const operadorValido = filter.operator.length === 0 || filter.operator.includes(item.user);
+            const operacaoValida = filter.operation.length === 0 || filter.operation.includes(item.comission);
+            return dataValida && operadorValido && operacaoValida;
+              });
 
           // Agrupar e contar ocorrências de cada contrato
           const agrupado = dadosFiltrados.reduce((index, item) => {

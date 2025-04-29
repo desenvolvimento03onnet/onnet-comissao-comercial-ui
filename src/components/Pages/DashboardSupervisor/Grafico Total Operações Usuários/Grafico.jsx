@@ -1,7 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useState, useEffect } from "react";
-import { loadGraficoTotalOperacoesUsuarios } from "../../../../services/loadGraficoTotalOperacoesUsuarios";
+import { serviceSupervisores } from "../../../../services/serviceSupervisores";
 import './Grafico.module.css';
 
 const ApexChart = ({ filter }) => {
@@ -10,17 +10,17 @@ const ApexChart = ({ filter }) => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const carrega = await loadGraficoTotalOperacoesUsuarios(sessionStorage.getItem(0));
+          const carrega = await serviceSupervisores(sessionStorage.getItem(0));
           
-          const dadosFiltrados = filter.startDate && filter.endDate
-            ? carrega.filter(item =>
-                new Date(item.date) >= new Date(filter.startDate) &&
-                new Date(item.date) <= new Date(filter.endDate)
-              )
-            : carrega;
+          const dadosFiltrados = carrega.filter(item => {
+            const dataValida = new Date(item.date) >= new Date(filter.startDate) && new Date(item.date) <= new Date(filter.endDate);
+            const operadorValido = filter.operator.length === 0 || filter.operator.includes(item.operator);
+            const operacaoValida = filter.operation.length === 0 || filter.operation.includes(item.operation);
+            return dataValida && operadorValido && operacaoValida;
+              });
           // Agrupar e contar ocorrências de cada contrato
           const agrupado = dadosFiltrados.reduce((index, item) => {
-            index[item.user] = (index[item.user] || 0) + 1;
+            index[item.operator] = (index[item.operator] || 0) + 1;
             return index;
           }, {});
           // Criar os arrays de labels e valores

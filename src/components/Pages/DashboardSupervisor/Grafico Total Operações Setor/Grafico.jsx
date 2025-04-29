@@ -16,13 +16,12 @@ const ApexChart = ({ filter }) => {
           //const usuaSe = await loadUsuarioSetores(sessionStorage.getItem(0));
           
           // Filtrar dados conforme data selecionada
-        const dadosFiltrados = filter.startDate && filter.endDate
-        ? carrega.filter(item =>
-            new Date(item.date) >= new Date(filter.startDate) &&
-            new Date(item.date) <= new Date(filter.endDate)
-          )
-        : carrega;
-
+          const dadosFiltrados = carrega.filter(item => {
+            const dataValida = new Date(item.date) >= new Date(filter.startDate) && new Date(item.date) <= new Date(filter.endDate);
+            const operadorValido = filter.operator.length === 0 || filter.operator.includes(item.user);
+            const operacaoValida = filter.operation.length === 0 || filter.operation.includes(item.operation);
+            return dataValida && operadorValido && operacaoValida;
+              });
         const datas = carrega.reduce((index, item) => {
           index[item.date.slice(0, 7)] = (index[item.date.slice(0, 7)] || 0) + 1;
           return index;
@@ -47,7 +46,7 @@ const ApexChart = ({ filter }) => {
           name: sector,
           data: Object.entries(groupedData[sector]).map(([date, count]) => ({
             x: date,
-            y: count,
+            y: count || 0,
           })),
         }));
       };
@@ -159,7 +158,7 @@ const ApexChart = ({ filter }) => {
             },
             formatter(val, opts) {
               const seriesName = opts.w.config.series[opts.seriesIndex].name
-              return val !== null ? seriesName : ''
+              return val !== null ? (seriesName + ':' + val) : ''
             },
           },
           colors: chartDataBySector.map((_, index) => getColor(index, { globals: { seriesNames: chartDataBySector.map(s => s.name) } })),
@@ -240,7 +239,6 @@ const ApexChart = ({ filter }) => {
             },
             formatter(val, opts) {
               const seriesName = opts.w.config.series[opts.seriesIndex].name
-              console.log(chartDataOverall);
               return val !== null ? (seriesName + ':' + val) : ''
             },
           },

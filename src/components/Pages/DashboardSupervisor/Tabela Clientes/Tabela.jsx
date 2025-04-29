@@ -1,7 +1,7 @@
 import React from "react";
 import { useCSVDownloader } from 'react-papaparse';
 import { useState, useEffect } from "react";
-import { loadTabelaSupervisores } from "../../../../services/loadTabelaSupervisores";
+import { serviceSupervisores } from "../../../../services/serviceSupervisores";
 import style from './Tabela.module.css';
 import ExcelJS from 'exceljs';
 import { saveAs } from 'file-saver';
@@ -13,14 +13,14 @@ const Tabela = ({ filter }) => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const carrega = await loadTabelaSupervisores(sessionStorage.getItem(0));
+          const carrega = await serviceSupervisores(sessionStorage.getItem(0));
           
-          const dadosFiltrados = filter.startDate && filter.endDate
-            ? carrega.filter(item =>
-                new Date(item.date) >= new Date(filter.startDate) &&
-                new Date(item.date) <= new Date(filter.endDate)
-              )
-            : carrega;
+          const dadosFiltrados = carrega.filter(item => {
+            const dataValida = new Date(item.date) >= new Date(filter.startDate) && new Date(item.date) <= new Date(filter.endDate);
+            const operadorValido = filter.operator.length === 0 || filter.operator.includes(item.operator);
+            const operacaoValida = filter.operation.length === 0 || filter.operation.includes(item.operation);
+            return dataValida && operadorValido && operacaoValida;
+              });
 
           const ordena = [...dadosFiltrados].sort((a, b) => {
             const cidadeComparison = a.city.localeCompare(b.city);
