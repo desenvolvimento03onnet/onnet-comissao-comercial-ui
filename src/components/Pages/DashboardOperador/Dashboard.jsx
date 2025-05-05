@@ -1,5 +1,5 @@
 import React from 'react';
-import { FaHome, FaTable } from "react-icons/fa";
+import { FaHome, FaChartPie, FaTable, FaChartLine } from "react-icons/fa";
 import styles from './Dashboard.module.css';
 import logo from '../../../assets/logoonnet.png';
 import GraficoTotalOperacoes from './Grafico Total Operacoes/Grafico';
@@ -8,6 +8,7 @@ import GraficoTotalRenovacoes from './Grafico Total Renovações/Grafico';
 import GraficoTotalOperacoesCidades from './Grafico Total Operacoes Cidades/Grafico';
 import GraficoTotalOperacoesComissoes from './Grafico Total Operacoes Comissoes/Grafico';
 import GraficoTotalVendasSetores from './Grafico Total Vendas Setor/Grafico';
+import NavResumo from './Nav Resumo/Grafico';
 import Filtro from './Filtro/Filtro';
 import ImagemUser from './Imagem Cliente/Imagem';
 import { loadGraficoTotalOperacoesUsuario } from '../../../services/loadGraficoTotalOperacoesUsuario';
@@ -27,8 +28,7 @@ const Dashboard = () => {
         <div className={styles.esquerda}>
           <div className={styles.navCima}></div>
           <div className={styles.navContent}>
-            <p className={styles.links}><FaHome className={styles.icone} /> Início</p>
-            {/* <p className={styles.links}><FaTable className={styles.icone} /> Tabela</p> */}
+            <Filtro onFilterChange={setFilter} />
           </div>
           <div className={styles.navBaixo}></div>
         </div>
@@ -36,57 +36,46 @@ const Dashboard = () => {
           <div className={styles.top}>
           <ImagemUser />
           </div>
-          <Tabs className={styles.tabIndex} selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
-            <TabList  className={styles.tabList}>
-              <Tab className={styles.tab} tabIndex={-1}>
-                  <a href="#">Comissões</a>
-              </Tab>
-              <Tab className={styles.tab}>
-                  <a href="#">Resumo</a>
-              </Tab>
-              <Tab className={styles.tab}>
-                <a href="#">Tabela</a>
-              </Tab>
-              <Filtro onFilterChange={setFilter} />
-            </TabList>
+          <div className={styles.baixo}>
+            <Tabs className={styles.tabIndex} selectedIndex={tabIndex} onSelect={(index) => setTabIndex(index)}>
+              <TabList  className={styles.tabList}>
+                <Tab className={styles.tab} tabIndex={-1}>
+                    <a href="#"><FaChartPie /></a>
+                </Tab>
+                <Tab className={styles.tab}>
+                    <a href="#"><FaChartLine /></a>
+                </Tab>
+                <Tab className={styles.tab}>
+                  <a href="#"><FaTable /></a>
+                </Tab>
+              </TabList>
 
-            {/* Painel dos Gráficos */}
-            <TabPanel>
-              <div className={styles.container}>
-                  <div className={styles.cima1}>
-                    <GraficoTotalOperacoesComissoes filter={filter} />
-                  </div>
-                  <div className={styles.baixo}>
-                  </div>
-              </div>
-            </TabPanel>
-
-            <TabPanel>
-              <div className={styles.container}>
-                <div className={styles.cima}>
-                  <GraficoTotalVendas filter={filter} />
-                  <GraficoTotalRenovacoes filter={filter} />
+              {/* Painel dos Gráficos */}
+              <TabPanel>
+                <div className={styles.container}>
+                  <NavResumo filter={filter} />
+                  <GraficoTotalOperacoesComissoes filter={filter} />
                 </div>
-                <div className={styles.baixo}>
+              </TabPanel>
+
+              <TabPanel>
+                <div className={styles.container}>
+                  <div className={styles.cima}>
+                    <GraficoTotalVendas filter={filter} />
+                    <GraficoTotalRenovacoes filter={filter} />
+                  </div>
                   <GraficoTotalOperacoesCidades filter={filter} />
                 </div>
-              </div>
-            </TabPanel>
+              </TabPanel>
 
-             {/* Painel da Tabela */}
-             <TabPanel>
-              <div className={styles.container}>
-                <div className={styles.aba2}>
-                  <div className={styles.cima}>
-                    <TabelaUsuarios filter={filter} />
-                  </div>
-                  {/* <div className={styles.bottom}>
-                    <Load />
-                  </div> */}
+              {/* Painel da Tabela */}
+              <TabPanel>
+                <div className={styles.container}>
+                  <TabelaUsuarios filter={filter} />
                 </div>
-              </div>
-            </TabPanel>
-          </Tabs>
+              </TabPanel>
+            </Tabs>
+          </div>
         </div>
       </div>
       <div className={styles.footer}>

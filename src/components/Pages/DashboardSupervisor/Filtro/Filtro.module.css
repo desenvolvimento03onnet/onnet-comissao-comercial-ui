@@ -72,7 +72,7 @@
 .divComboBox .customStyles {
   display: block;
   width: 80%;
-  max-width: 400px; /* máximo para não estourar em telas grandes */
+  max-width: 400px;
   padding: 8px 12px;
   background-color: white; /* branco */
   color: #000; /* preto */
@@ -92,4 +92,30 @@
 
 :global(.react-datepicker) {
   margin-left: 90px;
+}
+
+:global(.react-datepicker__navigation) {
+  background-color: #85c2ff;
+  border-radius: 20%;
+}
+
+:global(.react-datepicker__navigation--previous), :global(.react-datepicker__navigation--next) {
+  color: white; /* seta branca */
+}
+
+/* Opcional: mudar a cor do ícone da seta (← e →) */
+:global(.react-datepicker__navigation-icon::before) {
+  border-color: white; /* cor da seta */
+}
+
+:global(.react-datepicker__day--in-selecting-range){
+  background-color: #85c2ff;
+}
+
+:global(.react-datepicker__navigation--previous:hover), :global(.react-datepicker__navigation--next:hover) {
+  background-color: #216ba5;
+}
+
+:global(.react-datepicker__navigation:hover .react-datepicker__navigation-icon::before) {
+  border-color: white;
 }

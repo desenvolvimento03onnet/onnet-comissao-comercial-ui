@@ -23,12 +23,11 @@ const Tabela = ({ filter }) => {
         try {
           const carrega = await loadTabelaUsuarios(sessionStorage.getItem(0));
           
-          const dadosFiltrados = filter.startDate && filter.endDate
-            ? carrega.filter(item =>
-                new Date(item.date) >= new Date(filter.startDate) &&
-                new Date(item.date) <= new Date(filter.endDate)
-              )
-            : carrega;
+          const dadosFiltrados = carrega.filter(item => {
+            const dataValida = new Date(item.date) >= new Date(filter.startDate) && new Date(item.date) <= new Date(filter.endDate);
+            const operacaoValida = filter.operation.length === 0 || filter.operation.includes(item.operation);
+            return dataValida && operacaoValida;
+              });
 
           const ordena = [...dadosFiltrados].sort((a, b) => {
             const cidadeComparison = a.city.localeCompare(b.city);
@@ -124,6 +123,7 @@ const Tabela = ({ filter }) => {
         { header: 'Pago?', key: 'paid', width: 10 },
         { header: 'Data Vencimento', key: 'due_date', width: 15 },
         { header: 'Comissão', key: 'comission', width: 15 },
+        { header: 'Aprovado?', key: 'accepted', width: 10 },
       ];
 
       // Estilizando o cabeçalho
@@ -185,7 +185,8 @@ const Tabela = ({ filter }) => {
           invoice: data.invoice,
           paid: data.paid ? "Sim" : "Não",
           due_date: data.due_date,
-          comission: data.paid ? (parseFloat(eval(data.comission).toFixed(2)) || 0) : "Cliente Não Pagou"
+          comission: data.paid ? (parseFloat(eval(data.comission).toFixed(2)) || 0) : "Cliente Não Pagou",
+          accepted: data.accepted
         });
       });
 
@@ -253,6 +254,7 @@ const Tabela = ({ filter }) => {
                 <th>Pago?</th>
                 <th>Data Vencimento</th>
                 <th>Comissão</th>
+                <th>Aceito?</th>
               </tr>
             </thead>
             <tbody className={style.Tbody}>
@@ -279,6 +281,7 @@ const Tabela = ({ filter }) => {
                   <td>{data.paid ? "Sim" : "Não"}</td>
                   <td>{data.due_date}</td>
                   <td>{data.paid ? (parseFloat(eval(data.comission).toFixed(2)) || 0) : "Cliente Não Pagou"}</td>
+                  <td>{data.accepted}</td>
                 </tr>
               ))}
             </tbody>

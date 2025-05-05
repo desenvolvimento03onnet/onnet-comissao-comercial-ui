@@ -1,252 +1,221 @@
-    .card{
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-    flex-direction: column;
-  }
-  
-  .principal{
-    top: 0%;
-    width: 100%;
-    height: 96%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .esquerda{
-    left: 0%;
-    width: 16.5%;
-    height: 100%;
-    background-color: #85c2ff;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+.card{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100vw;
+  height: 100vh;
+  flex-direction: column;
+}
 
-  .esquerda .navCima {
-    width: 100%;
-    height: 30%;
-  }
+.principal{
+  top: 0%;
+  width: 100%;
+  height: 96%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.esquerda{
+  left: 0%;
+  width: 16.5%;
+  height: 100%;
+  background-color: #85c2ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
-  .esquerda .navContent {
-    width: 100%;
-    height: 40%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-  }
+.esquerda .navCima {
+  width: 100%;
+  height: 30%;
+}
 
-  .esquerda .links {
-    color: white;
-    width: 100%;
-    height: 20%;
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-  }
+.esquerda .navContent {
+  position: relative;
+  width: 100%;
+  height: 40%;
+  color: white;
+  font-size: 150%;
+  font-weight: bold;
+}
 
-  .esquerda .links .icone {
-    width: 40px;
-    height: 50px;
-  }
+.esquerda .links {
+  color: white;
+  width: 100%;
+  height: 20%;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+}
 
-  .esquerda .navBaixo {
-    width: 100%;
-    height: 30%;
-  }
+.esquerda .links .icone {
+  width: 40px;
+  height: 50px;
+}
 
-  .direita{
-    right: 0;
-    width: 83.5%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    overflow-x: auto;
-  }
+.esquerda .navBaixo {
+  width: 100%;
+  height: 30%;
+}
 
-  .direita .tabIndex{
-    z-index: 0;
-    top: 0%;
-    left: 0%;
-    width: 100%;
-  }
+.direita{
+  position: relative;
+  right: 0;
+  width: 83.5%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
-  .direita .tabIndex .tabList{
-    width: 100%;
-    display: flex;
-    position: sticky;
-    background-color: #ecf0f1;
-    z-index: 1;
-    top: 8.6%;
-    height: 7%;
-    align-items: center;
-    list-style-type: none;
-  }
+.direita .tabIndex{
+  z-index: 0;
+  top: 0%;
+  left: 0%;
+  width: 100%;
+  height: 100%;
 
-  .direita .tabIndex .tab{
-    background-color: #ecf0f1;
-    padding: 10px;
-    border: 10px solid #f9f9f9;
-    border-radius: 20px 20px 0px 0px;
-    cursor: pointer;
-    pointer-events: auto;
-    z-index: 1;
-  }
+}
 
-  .direita .tabIndex .tab a{
-    text-decoration: none;
-  }
-  
-  .direita .tabIndex .tab a:active{
-    color: rgb(186, 186, 186);
-  }
+.direita .tabIndex .tabList{
+  top: 0%;
+  width: 100%;
+  display: flex;
+  position: sticky;
+  background-color: #ecf0f1;
+  z-index: 1;
+  height: 10%;
+  align-items: center;
+  list-style-type: none;
+}
 
-  .direita .tabIndex .tab:focus{
-    background-color: #f9f9f9;
-  }
+.direita .tabIndex .tab{
+  background-color: #ecf0f1;
+  border: 10px solid #f9f9f9;
+  border-radius: 20px 20px 0px 0px;
+  cursor: pointer;
+  pointer-events: auto;
+  z-index: 1;
+  font-size: 20px;
+  padding: 0px 10px 0px 10px;
+}
 
-  .direita::-webkit-scrollbar {
-    display: none;
-  }
-  
-  .top {
-    top: 0%;
-    right: 0%;
-    position: absolute;
-    z-index: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 83.5%;
-    height: 8.3%;
-    z-index: 1;
-  }
-  .container {
-    width: 100%;
-    height: 100%;
-    position: relative;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    padding-top: 6.3%;
-    z-index: 0;
-  }
-  
-  .container .cima, .container .aba2 .cima, .container .cima1 {
-    position: relative;
-    background-color: #ecf0f1;
-    display: flex;
-    align-items: center;
-    justify-content: space-around;
-    width: 100%;
-    height: 50%;
-    z-index: 0;
-    padding-top: 10%;
-  }
+.direita .tabIndex .tab a{
+  text-decoration: none;
+}
 
-  .container .cima1 {
-    padding-top: 30% !important;
-  }
+.direita .tabIndex .tab a:active{
+  color: rgb(186, 186, 186);
+}
 
-  .container .aba2 {
-    padding-bottom: 30% !important;
-  }
+.direita .tabIndex .tab:focus{
+  background-color: #f9f9f9;
+}
 
-  .valores{
-    left: 0%;
-    position: relative;
-    display: flex;
-    align-items: left;
-    justify-content: space-around;
-    flex-direction: column;
-    width: 15%;
-    height: 100%;
-  }
+.direita .baixo::-webkit-scrollbar {
+  display: none;
+}
 
-  .container .aba2 {
-    background-color: #ecf0f1;
-    top: 0%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    z-index: 2;
-    padding-bottom: 16%;
-  }
-  .container .baixo, .container .aba2 .baixo{
-    background-color: #ecf0f1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 50%;
-    z-index: 0;
-  }
+.direita .top {
+  top: 0%;
+  right: 0%;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 10%;
+  z-index: 1;
+  background-color: white;
+}
 
-  .title {
-    text-align: center;
-    margin-bottom: 20px;
-  }
+.direita .baixo{
+  display: flex;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 90%;
+  overflow-y: scroll;
+}
 
-  .button {
-    padding: 10px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .button:hover {
-    background-color: #0056b3;
-  }
-  .bottom {
-    width: 100%;
-    height: 80%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
+.direita .baixo .container{
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 90%;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
 
-  .footer{
-    bottom: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 4%;
-  }
-  .empresa {
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: left;
-  }
-  .empresa img{
-    filter: saturate(1);
-    margin-left: 4%;
-    margin-top: 0.1%;
-    width: 7%;
-    height: 80%;
-  }
-  .direitos{
-    width: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: right;
-  }
-  .direitos span{
-    right: 0%;
-    margin-top: 0.1%;
-    width: 50%;
-    height: 80%;
-    opacity: 0.5;
-  }
+.direita .baixo .container .cima{
+  display: flex;
+  width: 100%;
+  height: 90%;
+  align-items: center;
+  justify-content: center;
+}
+
+.title {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.button {
+  padding: 10px;
+  background-color: #007bff;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.button:hover {
+  background-color: #0056b3;
+}
+.bottom {
+  width: 100%;
+  height: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.footer{
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 4%;
+}
+.empresa {
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+}
+.empresa img{
+  filter: saturate(1);
+  margin-left: 4%;
+  margin-top: 0.1%;
+  width: 7%;
+  height: 80%;
+}
+.direitos{
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+}
+.direitos span{
+  right: 0%;
+  margin-top: 0.1%;
+  width: 50%;
+  height: 80%;
+  opacity: 0.5;
+}

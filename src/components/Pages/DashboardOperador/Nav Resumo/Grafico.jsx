@@ -1,7 +1,7 @@
 import React from "react";
 import html2canvas from 'html2canvas';
 import { useState, useRef, useEffect } from "react";
-import { serviceSupervisores } from "../../../../services/serviceSupervisores";
+import { serviceOperadores } from "../../../../services/serviceOperador";
 import style from './Grafico.module.css';
 import { FaBars } from "react-icons/fa";
 
@@ -52,14 +52,12 @@ const ApexChart = ({ filter }) => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const carrega = await serviceSupervisores(sessionStorage.getItem(0));
+          const carrega = await serviceOperadores(sessionStorage.getItem(0));
           const dadosFiltrados = carrega.filter(item => {
             const dataValida = new Date(item.date) >= new Date(filter.startDate) && new Date(item.date) <= new Date(filter.endDate);
-            const operadorValido = filter.operator.length === 0 || filter.operator.includes(item.operator);
             const operacaoValida = filter.operation.length === 0 || filter.operation.includes(item.operation);
-            return dataValida && operadorValido && operacaoValida;
+            return dataValida && operacaoValida;
               });
-  
           const agrupado = dadosFiltrados.reduce((index, item) => {
             const op = item.operation;
             const pago = item.paid === true || item.paid === 'true';

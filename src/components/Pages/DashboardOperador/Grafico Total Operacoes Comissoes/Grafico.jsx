@@ -1,7 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useState, useEffect } from "react";
-import { loadGraficoTotalOperacoesComissoes } from "../../../../services/loadGraficoTotalOperacoesComissoes";
+import { serviceOperadores } from "../../../../services/serviceOperador";
 import { validaUsuarioClienteComissao } from "../../../../services/validaUsuarioClienteComissao";
 import insereUsuarioClienteComissao from "../../../../services/insereUsuarioClienteComissao";
 import styles from './Grafico.module.css';
@@ -12,32 +12,56 @@ const ApexChart = ({ filter }) => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const carrega = await loadGraficoTotalOperacoesComissoes(sessionStorage.getItem(0));
+          const carrega = await serviceOperadores(sessionStorage.getItem(0));
           const valida = await validaUsuarioClienteComissao();
-          const resultado = carrega.filter(inserir => !valida.some(cadastrados => inserir.id_client == cadastrados.id_client) || !valida.some(cadastrados => inserir.id_client == cadastrados.id_client && sessionStorage.getItem(2) == cadastrados.id_user) || !valida.some(cadastrados => inserir.id_client == cadastrados.id_client && sessionStorage.getItem(2) == cadastrados.id_user && parseFloat(eval(inserir.value).toFixed(2)) == cadastrados.comission_value));
+          
+          const totaisPorCliente = {};
+          carrega.forEach(item => {
+            if (!item.paid) return;
+            const cod = item.id;
+            const valor = parseFloat(eval(item.comission).toFixed(2)) || 0;
+            totaisPorCliente[cod] = (totaisPorCliente[cod] || 0) + valor;
+          });
+
+          const resultado = Object.entries(totaisPorCliente)
+          .filter(([id, soma]) => {
+            const idUser = sessionStorage.getItem(2);
+            return !valida.some(cadastrado =>
+              parseInt(cadastrado.id_client) === parseInt(id) &&
+              parseInt(cadastrado.id_user) === parseInt(idUser) &&
+              parseFloat(cadastrado.comission_value.toFixed(2)) === parseFloat(soma.toFixed(2))
+            );
+          })
+          .map(([id, soma]) => {
+            return {
+              id_client: parseInt(id),
+              value: soma
+            };
+          });
+          
+          // const resultado = carrega.filter(inserir => !valida.some(cadastrados => inserir.codclient == cadastrados.id_client) || !valida.some(cadastrados => inserir.codclient == cadastrados.id_client && sessionStorage.getItem(2) == cadastrados.id_user) || !valida.some(cadastrados => inserir.codclient == cadastrados.id_client && sessionStorage.getItem(2) == cadastrados.id_user && parseFloat(eval(inserir.comission).toFixed(2)) == cadastrados.comission_value));
           
           resultado.map(async(item) => {
             await insereUsuarioClienteComissao(sessionStorage.getItem(2), item.id_client, item.value, dataAtual);
           });
 
-          const dadosFiltrados = filter.startDate && filter.endDate
-            ? carrega.filter(item =>
-                new Date(item.date) >= new Date(filter.startDate) &&
-                new Date(item.date) <= new Date(filter.endDate)
-              )
-            : carrega;
-            
+          const dadosFiltrados = carrega.filter(item => {
+            const dataValida = new Date(item.date) >= new Date(filter.startDate) && new Date(item.date) <= new Date(filter.endDate);
+            const operacaoValida = filter.operation.length === 0 || filter.operation.includes(item.operation);
+            return dataValida && operacaoValida;
+              });
+              
           const agrupado = dadosFiltrados.reduce((index, item) => {
             if (!item.paid) {
               return index;
             }
 
-            if (!index[item.comission]) {
-              index[item.comission] = { formula: [], total: 0 };
+            if (!index[item.operation]) {
+              index[item.operation] = { formula: [], total: 0 };
             }
-              const valorNumerico = parseFloat(eval(item.value).toFixed(2)) || 0;
-              index[item.comission].formula.push({ valores: item.formula + " : " + new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(valorNumerico) });
-              index[item.comission].total += valorNumerico;
+              const valorNumerico = parseFloat(eval(item.comission).toFixed(2)) || 0;
+              index[item.operation].formula.push({ valores: item.formula + " : " + new Intl.NumberFormat("pt-BR", { style: "currency", currency: "BRL" }).format(valorNumerico) });
+              index[item.operation].total += valorNumerico;
               // console.log(index[item.comission]);
               return index;
           }, {'Downgrade':0, 'Renovação':0, 'Upgrade':0, 'Venda':0, 'Dia 1':0, 'Dia 2':0});

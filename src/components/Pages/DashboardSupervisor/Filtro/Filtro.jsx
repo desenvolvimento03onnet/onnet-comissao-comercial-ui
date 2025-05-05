@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import DatePicker from "react-datepicker";
+import DatePicker, { registerLocale } from "react-datepicker";
+import ptBR from "date-fns/locale/pt-BR";
+registerLocale("pt-BR", ptBR);
 import "react-datepicker/dist/react-datepicker.css";
 import styles from "./Filtro.module.css";
 import { loadTabelaSupervisores } from "../../../../services/loadTabelaSupervisores";
@@ -116,6 +118,11 @@ const Filtro = ({ onFilterChange }) => {
       boxShadow: '0 4px 6px rgba(0,0,0,0.15)',
       padding: '8px',
       cursor: 'pointer',
+      width: '100%',
+      maxWidth: '400px',
+      minWidth: '200px',
+      fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+      marginTop: '10px',
     }),
     option: (provided, state) => ({
       ...provided,
@@ -123,6 +130,11 @@ const Filtro = ({ onFilterChange }) => {
       color: '#000',
       cursor: 'pointer',
       textAlign: 'center',
+      fontSize: 'clamp(0.8rem, 1.5vw, 1rem)',
+      ':hover': {
+        backgroundColor: '#85c2ff',
+        color: '#fff',
+      },
     }),
     multiValue: (provided) => ({
       ...provided,
@@ -155,6 +167,8 @@ const Filtro = ({ onFilterChange }) => {
                   endDate={endDate}
                   className={styles.customDatepicker}
                   placeholderText="Data inicial"
+                  dateFormat="dd/MM/yyyy"
+                  locale="pt-BR"
               />
               <DatePicker
                   title="Data Final"
@@ -165,6 +179,8 @@ const Filtro = ({ onFilterChange }) => {
                   endDate={endDate}
                   className={styles.customDatepicker}
                   placeholderText="Data final"
+                  dateFormat="dd/MM/yyyy"
+                  locale="pt-BR"
               />
               {/* <button onClick={resetDate}>Limpar</button> */}
               {/* <button onClick={handleFilterChange}>Aplicar</button> */}

@@ -1,7 +1,7 @@
 import React from "react";
 import ReactApexChart from "react-apexcharts";
 import { useState, useEffect } from "react";
-import { loadGraficoTotalOperacoesCidadesUsuario } from "../../../../services/loadGraficoTotalOperacoesCidadesUsuario";
+import { serviceOperadores } from "../../../../services/serviceOperador";
 import { loadCidades } from "../../../../services/loadCidades";
 import styles from './Grafico.module.css';
 
@@ -10,20 +10,18 @@ const ApexChart = ({ filter }) => {
     useEffect(() => {
       const fetchData = async () => {
         try {
-          const carrega = await loadGraficoTotalOperacoesCidadesUsuario(sessionStorage.getItem(0));
+          const carrega = await serviceOperadores(sessionStorage.getItem(0));
           const cidades = await loadCidades();
           const cid = cidades.reduce((index, item) => {
             index[item.name] = (index[item.name] || 0);
             return index;
           },{});
-
-          const dadosFiltrados = filter.startDate && filter.endDate
-            ? carrega.filter(item =>
-                new Date(item.date) >= new Date(filter.startDate) &&
-                new Date(item.date) <= new Date(filter.endDate)
-              )
-            : carrega;
-
+          
+          const dadosFiltrados = carrega.filter(item => {
+            const dataValida = new Date(item.date) >= new Date(filter.startDate) && new Date(item.date) <= new Date(filter.endDate);
+            const operacaoValida = filter.operation.length === 0 || filter.operation.includes(item.operation);
+            return dataValida && operacaoValida;
+              });
           // Agrupar e contar ocorrências de cada contrato
           const agrupado = dadosFiltrados.reduce((index, item) => {
             index[item.city] = (index[item.city] || 0) + 1;
