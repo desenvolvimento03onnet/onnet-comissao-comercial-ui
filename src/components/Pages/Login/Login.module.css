@@ -103,6 +103,17 @@
     outline: none;
   }
 
+  .botaoMostrar{
+    position: absolute;
+    right: 10px;
+    top: 60%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #85c2ff;
+  }
+
   .direitaA .button {
     padding: 10px;
     background-color: #85c2ff;

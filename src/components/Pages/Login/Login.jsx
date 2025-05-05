@@ -5,6 +5,7 @@ import insereLogUsuario from "../../../services/insereLogUsuário";
 import Lottie from "lottie-react";
 import animation from "../../../assets/animation.json";
 import styles from './Login.module.css';
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 const Login = () => {
   sessionStorage.clear();
@@ -12,6 +13,7 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [ip, setIp] = useState("");
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   useEffect(() => {
     fetch("https://api.ipify.org?format=json")
@@ -61,15 +63,22 @@ const Login = () => {
                 placeholder='Usuário'
               />
             </div>
-            <div className={styles.inputGroup}>
+            <div className={styles.inputGroup} style={{ position: 'relative', width: '100%' }}>
               <input
-                type="password"
+                type={showPassword ? "text" : "password"}
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 required
                 className={styles.input}
                 placeholder='Senha'
               />
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className={styles.botaoMostrar}
+              >
+                {showPassword ? <FiEyeOff size={20} /> : <FiEye size={20} />}
+              </button>
             </div>
             <button type="submit" className={styles.button}>Entrar</button>
           </form>
